@@ -1,0 +1,28 @@
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+  "postData": "This is the content of the new post.",
+  "senderId": "avivMenahem",
+  "postId": 3
+}
+
+###
+GET http://localhost:3000/posts
+
+###
+GET http://localhost:3000/posts/674e1e3b6b1751406d0a251b
+
+###
+DELETE http://localhost:3000/posts
+
+###
+GET http://localhost:3000/posts?senderId=adam
+
+###
+PUT http://localhost:3000/posts/674e1e3b6b1751406d0a251b
+Content-Type: application/json
+
+{
+  "postData": "I was here"
+}
