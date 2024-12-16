@@ -1,15 +1,25 @@
 {
   "dependencies": {
     "body-parser": "^1.20.3",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "mongoose": "^8.8.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@eslint/js": "^9.17.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "globals": "^15.13.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1"
   },
-  "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
-  }
+"scripts": {
+  "test": "tsc && jest --detectOpenHandles --forceExit",
+  "start": "tsc && node dist/server.js",
+  "lint": "eslint . --ext .ts",
+  "devstart": "nodemon --exec ts-node -r dotenv/config ./src/server.ts"
+}
 }
