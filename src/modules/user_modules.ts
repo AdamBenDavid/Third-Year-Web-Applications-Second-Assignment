@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 export interface User {
   email: string;
-  userName: string;
+  favPat: string;
   password: string;
-  // _id?: string;
+  _id?: string;
 }
 
 const userSchema = new mongoose.Schema<User>({
@@ -13,16 +13,14 @@ const userSchema = new mongoose.Schema<User>({
     required: true,
     unique: true,
   },
-  userName:{
-    type: String,
-    required: true,
-    unique: true,
-  },
   password: {
     type: String,
     required: true,
   },
-
+  favPat:{
+      type: String,
+      required: true,
+    },
 });
 
 const userModel = mongoose.model<User>("Users", userSchema);

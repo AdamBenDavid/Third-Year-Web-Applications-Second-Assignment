@@ -1,38 +1,38 @@
-import express from "express";
-import postsRoutes from "../src/routes/posts_routes";
-import commentsRoutes from "../src/routes/comments_routes";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import bodyParser from "body-parser";
-import { log } from "console";
-
+import dotenv from "dotenv"
 dotenv.config();
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import express, { Express } from "express";
+import postsRoutes from "./routes/posts_routes";
+import commentsRoutes from "./routes/comments_routes";
+import usersRoutes from "./routes/users_routes";
 
 const app = express();
-const port = process.env.PORT;
-const db = mongoose.connection;
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/posts", postsRoutes);
 app.use("/comments", commentsRoutes);
+app.use("/users", usersRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+const db = mongoose.connection;
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Connected to MongoDB!"));
 
-if (!process.env.DB_CONNECT) {
-  console.error("Missing DB_CONNECT env variable");
-  process.exit(1);
-} else {
-  mongoose.connect(process.env.DB_CONNECT, {})
-    .then(() => {
-      console.log('Connected to MongoDB!');
-    })
-    .catch((err) => {
-      console.error('Failed to connect to MongoDB:', err);
-    });
-}
+const initApp = () => {
+  return new Promise<Express>((resolve, reject) => {
+    if (!process.env.DB_CONNECT) {
+      reject("DB_CONNECT is not defined in .env file");
+    } else {
+      mongoose
+        .connect(process.env.DB_CONNECT)
+        .then(() => {
+          resolve(app);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    }
+  });
+};
 
-
-
+export default initApp;
