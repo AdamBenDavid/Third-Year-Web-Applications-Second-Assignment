@@ -10,12 +10,11 @@ const userSchema = new mongoose_1.default.Schema({
         required: true,
         unique: true,
     },
-    userName: {
+    password: {
         type: String,
         required: true,
-        unique: true,
     },
-    password: {
+    favPat: {
         type: String,
         required: true,
     },
