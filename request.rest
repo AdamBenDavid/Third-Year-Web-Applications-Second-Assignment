@@ -12,13 +12,13 @@ Content-Type: application/json
 GET http://localhost:3000/posts
 
 ### get a post by id
-GET http://localhost:3000/posts/674e1100a945f2e8802cba8a
+GET http://localhost:3000/posts/6761c2758006dcdeb0f6391b
 
 ### get a post by senderId
 GET http://localhost:3000/posts/filter?senderId=Eliav
 
 ### update a post by id
-PUT http://localhost:3000/posts/676073d6a621bd5beb64772d
+PUT http://localhost:3000/posts/6761c2758006dcdeb0f6391b
 Content-Type: application/json
 
 {
@@ -43,10 +43,10 @@ Content-Type: application/json
 GET http://localhost:3000/comments
 
 ### read (get) a comment by id
-GET http://localhost:3000/comments/6760740da621bd5beb647733
+GET http://localhost:3000/comments/6761c2a58006dcdeb0f63921
 
 ### update a comment by id
-PUT http://localhost:3000/comments/6760740da621bd5beb647733
+PUT http://localhost:3000/comments/6761c2a58006dcdeb0f63921
 Content-Type: application/json
 
 {
@@ -54,4 +54,4 @@ Content-Type: application/json
 }
 
 ### delete a comment by id
-DELETE http://localhost:3000/comments/6750a30adc48698ba4afa7da
+DELETE http://localhost:3000/comments/6761c2a58006dcdeb0f63921

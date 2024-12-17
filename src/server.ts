@@ -4,6 +4,9 @@ import commentsRoutes from "../src/routes/comments_routes";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
+import { log } from "console";
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
