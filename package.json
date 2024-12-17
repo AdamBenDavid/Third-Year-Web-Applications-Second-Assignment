@@ -17,6 +17,7 @@
     "typescript-eslint": "^8.18.1"
   },
 "scripts": {
+  "nodemon": "nodemon server.js",
   "test": "tsc && jest --detectOpenHandles --forceExit",
   "start": "tsc && node dist/server.js",
   "lint": "eslint . --ext .ts",
