@@ -24,8 +24,14 @@ const getPostById = async (req:Request, res:Response) => {
   const postId = req.params.id;
   try {
     const post = await postModel.findById(postId);
-    if (post != null) res.send(post);
-    else res.status(400).send("post not found");
+    if (post != null) 
+    {
+      res.status(200).json(post);
+    }
+    else 
+    {
+      res.status(400).send("post not found");
+    }
   } catch (error) {
     res.status(400).send(error);
   }
@@ -58,16 +64,16 @@ const updatePostById = async (req:Request, res:Response) => {
 };
 
 // Controller to get posts by sender
+//here
 const getPostBySenderId = async (req:Request, res:Response) => {
   const senderId = req.query.senderId; // senderId מגיע מה-Query
-
   if (!senderId) {
     return res.status(400).json({ error: "Sender ID is required" });
   }
 
   try {
     const posts = await postModel.find({ senderId }); // חיפוש לפי senderId
-
+    
     if (posts.length === 0) {
       return res.status(404).json({ message: "No posts found for the given sender" });
     }

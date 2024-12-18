@@ -9,7 +9,6 @@
     "@eslint/js": "^9.17.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
-    "@types/mocha": "^10.0.10",
     "@types/node": "^22.10.2",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.17.0",
@@ -24,7 +23,7 @@
   },
   "scripts": {
     "nodemon": "nodemon server.js",
-    "test": "tsc && jest --detectOpenHandles --forceExit",
+    "test": "tsc && jest --detectOpenHandles --forceExit --verbose",
     "start": "tsc && node dist/server.js",
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon --exec ts-node -r dotenv/config ./src/server.ts"
