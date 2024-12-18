@@ -7,14 +7,12 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const posts_controller_1 = __importDefault(require("../controllers/posts_controller"));
 router.get("/", posts_controller_1.default.getAllPosts);
-// router.get("/filter", postsController.getPostBySenderId.bind(postsController) as express.RequestHandler);
 router.get("/filter", (req, res) => {
     posts_controller_1.default.getPostBySenderId(req, res);
 });
 router.post("/", posts_controller_1.default.addPost);
 router.get("/:id", posts_controller_1.default.getPostById);
 router.delete("/", posts_controller_1.default.deletePosts);
-// router.put("/:id", postsController.updatePostById.bind(postsController) as express.RequestHandler);
 router.put("/:id", (req, res) => {
     posts_controller_1.default.updatePostById(req, res);
 });

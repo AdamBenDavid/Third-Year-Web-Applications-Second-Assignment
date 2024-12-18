@@ -21,55 +21,59 @@ afterAll((done) => {
 
 let userId = "";
 
-describe("Posts Tests", () => {
-    test("Posts test get all", async () => {
-      const response = await request(app).get("/posts");
+describe("User Tests", () => {
+    test("User test get all", async () => {
+      const response = await request(app).get("/users");
       expect(response.statusCode).toBe(200);
       expect(response.body.length).toBe(0);
     }); 
 
-    // create a user
+    //create a user
     test("Test Create User", async () => {
+        console.log(testUsers[0]);
         const response = await request(app).post("/users").send(testUsers[0]);
+        console.log("response email: " + response.body.email);
         expect(response.statusCode).toBe(200);
         expect(response.body.email).toBe(testUsers[0].email);
         expect(response.body.favPat).toBe(testUsers[0].favPat);
-        expect(response.body._id).toBe(testUsers[0]._id);
         expect(response.body.password).toBe(testUsers[0].password);
         userId = response.body._id;
-    });
+        console.log("userId: " + userId);
+});
 
-    // get user by email
-    test("Test Get User", async () => {
+    // add function- get user by id
+    test("Test Get User by Id", async () => {
+        console.log("tests userId: " + userId);
+
         const response = await request(app).get(`/users/${userId}`);
         expect(response.statusCode).toBe(200);
+        expect(response.body._id).toBe(userId);
         expect(response.body.email).toBe(testUsers[0].email);
         expect(response.body.favPat).toBe(testUsers[0].favPat);
-        expect(response.body._id).toBe(testUsers[0]._id);
         expect(response.body.password).toBe(testUsers[0].password);
     });
 
-    // update password by email
+    // update password by id
     test("Test Update Password", async () => {
         const response = await request(app).put(`/users/${userId}`).send({password: "Updated Password"});
         expect(response.statusCode).toBe(200);
         expect(response.body.password).toBe("Updated Password");
     });
 
-    // update fav' pat by email
+    // update fav' pat by id
     test("Test Update Fav' Pat", async () => {
         const response = await request(app).put(`/users/${userId}`).send({favPat: "Updated Fav' Pat"});
         expect(response.statusCode).toBe(200);
         expect(response.body.favPat).toBe("Updated Fav' Pat");
     });
 
-    // delete user by email
+    // delete user by id
     test("Test Delete User", async () => {
         const response = await request(app).delete(`/users/${userId}`);
         expect(response.statusCode).toBe(200);
         expect(response.body.email).toBe(testUsers[0].email);
-        expect(response.body.favPat).toBe(testUsers[0].favPat);
-        expect(response.body._id).toBe(testUsers[0]._id);
-        expect(response.body.password).toBe(testUsers[0].password);
+        expect(response.body.favPat).toBe("Updated Fav' Pat");
+        expect(response.body._id).toBe(userId);
+        expect(response.body.password).toBe("Updated Password");
     });
 });

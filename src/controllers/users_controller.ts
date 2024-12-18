@@ -6,18 +6,17 @@ const createUser = async (req:Request, res:Response) => {
     try {
         const user = new userModel(req.body);
         await user.save();
-        res.send(user);
+        res.status(200).send(user);
     } catch (error) {
         res.status(400).send(error);
     }
 }
-        
-// Read user by email
-const getUserByEmail = async (req:Request, res:Response) => {
-    const email = req.params.email;
+
+//Read (get) user by id
+const getUserById = async (req:Request, res:Response) => {
+    const userId = req.params.id; // returns mail instead of id
     try {
-        const user = await userModel
-            .findOne({ email: email });
+        const user = await userModel.findById(userId);
         if (user != null) res.send(user);
         else res.status(400).send("user not found");
     } catch (error) {
@@ -25,14 +24,49 @@ const getUserByEmail = async (req:Request, res:Response) => {
     }
 }
 
-// Update Password by email
-const updatePasswordByEmail = async (req:Request, res:Response) => {
-    const email = req.params.email;
+// // Read user by email
+// const getUserByEmail = async (req:Request, res:Response) => {
+//     const email = req.params.email;
+//     try {
+//         const user = await userModel
+//             .findOne({ email: email });
+//         if (user != null) res.send(user);
+//         else res.status(400).send("user not found");
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+// }
+
+// Update Password by id
+const updatePasswordById = async (req:Request, res:Response) => {
+    const id = req.params.id;
     const updatedData = req.body;
 
     try {
         const updatedUser = await userModel.findOneAndUpdate(
-            { email: email },
+            { _id: id },
+            updatedData,
+            {
+                new: true,
+            }
+        );
+        if (!updatedUser) {
+            return res.status(404).send("User not found");
+        }
+        res.status(200).send(updatedUser);
+    } catch (error) {
+        res.status(400)
+    }
+}
+
+// Update fav' pat by id
+const updateFavPatById = async (req:Request, res:Response) => {
+    const id = req.params.id;
+    const updatedData = req.body;
+
+    try {
+        const updatedUser = await userModel.findOneAndUpdate(
+            { _id: id },
             updatedData,
             {
                 new: true,
@@ -47,34 +81,12 @@ const updatePasswordByEmail = async (req:Request, res:Response) => {
     }
 }
 
-// Update fav' pat by email
-const updateFavPatByEmail = async (req:Request, res:Response) => {
-    const email = req.params.email;
-    const updatedData = req.body;
+// Delete user by id
+const deleteUserById = async (req:Request, res:Response) => {
+    const id = req.params.id;
 
     try {
-        const updatedUser = await userModel.findOneAndUpdate(
-            { email: email },
-            updatedData,
-            {
-                new: true,
-            }
-        );
-        if (!updatedUser) {
-            return res.status(404).send("User not found");
-        }
-        res.status(200).send(updatedUser);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-}
-
-// Delete user by email
-const deleteUserByEmail = async (req:Request, res:Response) => {
-    const email = req.params.email;
-
-    try {
-        const user = await userModel.findOneAndDelete({ email: email });
+        const user = await userModel.findOneAndDelete({ _id: id });
         if (!user) {
             return res.status(404).send("User not found");
         }
@@ -84,4 +96,14 @@ const deleteUserByEmail = async (req:Request, res:Response) => {
     }
 }
 
-export default { createUser, getUserByEmail, updatePasswordByEmail, updateFavPatByEmail, deleteUserByEmail };
+//get all users
+const getAllUsers = async (req:Request, res:Response) => {
+    try {
+        const users = await userModel.find();
+        res.send(users);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
+export default { createUser, getUserById, updatePasswordById, updateFavPatById, deleteUserById, getAllUsers };

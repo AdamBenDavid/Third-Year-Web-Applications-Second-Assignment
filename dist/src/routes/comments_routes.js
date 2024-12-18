@@ -8,12 +8,10 @@ const router = express_1.default.Router();
 const comments_controller_1 = __importDefault(require("../controllers/comments_controller"));
 router.get("/", comments_controller_1.default.getAllComments);
 router.post("/", comments_controller_1.default.addComment);
-// router.put("/:id", commentsController.updateCommentById.bind(commentsController) as express.RequestHandler);
 router.put("/:id", (req, res) => {
     comments_controller_1.default.updateCommentById(req, res);
 });
 router.get("/:id", comments_controller_1.default.getCommentById);
-// router.delete("/:id",commentsController.deleteCommentById.bind(commentsController) as express.RequestHandler);
 router.delete("/:id", (req, res) => {
     comments_controller_1.default.deleteCommentById(req, res);
 });

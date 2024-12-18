@@ -1,14 +1,12 @@
 [
     {
         "email": "aviv@gmail.com",
-        "favPat": "Dog",
         "password": "Aa123456",
-        "_id": "1"
+        "favPat": "Dog"
     },
     {
         "email": "adam@gmail.com",
-        "favPat": "Dolphin",
         "password": "Bb123456",
-        "_id": "2"
+        "favPat": "Dolphin"
     }
 ]

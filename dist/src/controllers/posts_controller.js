@@ -36,10 +36,12 @@ const getPostById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const postId = req.params.id;
     try {
         const post = yield post_modules_1.default.findById(postId);
-        if (post != null)
-            res.send(post);
-        else
+        if (post != null) {
+            res.status(200).json(post);
+        }
+        else {
             res.status(400).send("post not found");
+        }
     }
     catch (error) {
         res.status(400).send(error);
@@ -71,6 +73,7 @@ const updatePostById = (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 // Controller to get posts by sender
+//here
 const getPostBySenderId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const senderId = req.query.senderId; // senderId מגיע מה-Query
     if (!senderId) {
