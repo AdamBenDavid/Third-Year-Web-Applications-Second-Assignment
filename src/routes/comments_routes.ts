@@ -17,4 +17,12 @@ router.delete("/:id",(req,res)=>{
     commentsController.deleteCommentById(req,res);
 });
 
+// router.get("/", commentsController.getAllComments.bind(commentsController));
+
+// router.get("/:id", commentsController.getCommentById.bind(commentsController));
+
+// router.post("/", authMiddleware, commentsController.addComment.bind(commentsController));
+
+//router.delete("/:id", authMiddleware, commentsController.deleteCommentById.bind(commentsController));
+
 export default router;
