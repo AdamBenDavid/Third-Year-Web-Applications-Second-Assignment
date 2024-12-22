@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import userSchema, { User } from '../modules/user_modules';
+import userModel, { User } from '../modules/user_modules';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Document } from 'mongoose';
@@ -9,10 +9,10 @@ const register = async (req: Request, res: Response) => {
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = await userSchema.create({
+        const user = await userModel.create({
             email: req.body.email,
-            password: hashedPassword,
             favPat: req.body.favPat,
+            password: hashedPassword,
         });
         res.status(200).send(user);
     } catch (err) {
@@ -52,7 +52,7 @@ const createToken = (userId: string): Tokens | null => {
 
 const login = async (req: Request, res: Response) => {
     try {
-        const user = await userSchema.findOne({ email: req.body.email });
+        const user = await userModel.findOne({ email: req.body.email });
         if (!user) {
             res.status(400).send('wrong username or password');
             return;
@@ -119,7 +119,7 @@ const verifyRefreshToken = (refreshToken: string | undefined) => {
             const userId = payload._id;
             try {
                 //get the user form the db
-                const user = await userSchema.findById(userId);
+                const user = await userModel.findById(userId);
                 if (!user) {
                     reject("fail");
                     return;
@@ -143,10 +143,8 @@ const verifyRefreshToken = (refreshToken: string | undefined) => {
 }
 
 const logout = async (req: Request, res: Response) => {
-    console.log("user email:",req.body.email);
     try {
         const user = await verifyRefreshToken(req.body.refreshToken);
-        console.log(user);
         
         await user.save();
         res.status(200).send("success");
@@ -190,8 +188,14 @@ type Payload = {
 };
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    console.log("authMiddleware");
+    console.log(req.header);
+
     const authorization = req.header('authorization');
     const token = authorization && authorization.split(' ')[1];
+    
+    console.log("authorization: " + authorization);
+    console.log("authMiddleware token: " + token);
 
     if (!token) {
         res.status(401).send('Access Denied');
@@ -202,11 +206,15 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         return;
     }
 
+    console.log("before verify");
+
     jwt.verify(token, process.env.TOKEN_SECRET, (err, payload) => {
         if (err) {
             res.status(401).send('Access Denied');
             return;
         }
+
+        console.log("before next")
         req.params.userId = (payload as Payload)._id;
         next();
     });
@@ -214,6 +222,3 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
 
 export default {register ,login, refresh, logout};
-
-
-

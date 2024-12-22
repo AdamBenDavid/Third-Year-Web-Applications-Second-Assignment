@@ -4,17 +4,32 @@ import mongoose from "mongoose";
 import postModel from "../modules/post_modules";
 import { Express } from "express";
 import testposts from "./test_posts.json";
-//import userModel, { IUser } from "../models/users_model";
+import userModel, { User } from "../modules/user_modules";
 
 var app: Express;
+
+type newUser = User & { token?: string };
+
+const testUser: newUser = {
+  email: "test@user.com",
+  favPat: "dog",
+  password: "testpassword",
+}
 
 beforeAll(async () => {
     console.log("beforeAll");
     app = await initApp();
     await postModel.deleteMany();
+    
+    await userModel.deleteMany();
+    const response = await request(app).post("/auth/register").send(testUser);
+    console.log("response.body.email: " + response.body.email);
+    const res = await request(app).post("/auth/login").send(testUser);
 
-    const posts = await postModel.find(); // שליפת כל הפוסטים
-    console.log("Posts in DB before tests:", posts);
+    console.log("res.body.id: " + res.body._id);
+    testUser.token = res.body.accessToken; //not as eliav did
+    testUser._id = res.body._id;
+    expect(testUser.token).toBeDefined();
 });
   
 afterAll((done) => {
@@ -28,13 +43,15 @@ let postId = "";
 describe("Posts Tests", () => {
     test("Posts test get all", async () => {
       const response = await request(app).get("/posts");
+      console.log("getallposts response.body: " + response.body.length);
       expect(response.statusCode).toBe(200);
       expect(response.body.length).toBe(0);
-    }); 
+    });
 
-    // add a post
     test("Test Create Post", async () => {
-        const response = await request(app).post("/posts").send(testposts[0]);
+        const response = await request(app).post("/posts")
+            .set({ authorization: "JWT " + testUser.token })
+            .send(testposts[0]);
         expect(response.statusCode).toBe(200);
         expect(response.body.postData).toBe(testposts[0].postData);
         expect(response.body.senderId).toBe(testposts[0].senderId);
@@ -65,7 +82,7 @@ describe("Posts Tests", () => {
         expect(response.body.senderId).toBe(testposts[0].senderId);
     });
 
-    // update post by id
+    //update post by id
     test("Test Update Post", async () => {
         const response = await request(app).put(`/posts/${postId}`).send({postData: "Updated Post"});
         console.log("response.body.postData: " + response.body.postData);

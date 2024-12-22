@@ -30,13 +30,14 @@ type newUser = User & {
 
 const testUser: newUser = {
   email: "test@user.com",
-  password: "testpassword",
   favPat: "dog",
+  password: "testpassword",
 }
 
 describe("Auth Tests", () => {
   test("Auth test register", async () => {
     const response = await request(app).post(baseUrl + "/register").send(testUser);
+    console.log("response register: " + response.body.email);
     expect(response.statusCode).toBe(200);
   });
 
@@ -96,16 +97,17 @@ describe("Auth Tests", () => {
   test("Auth test me", async () => {
     const response = await request(app).post("/posts").send({
         postData: "Test Post",
-        senderId: testUser._id,
+        senderId: "123",
     });
     expect(response.statusCode).not.toBe(201);
+
     const response2 = await request(app).post("/posts").set(
       { authorization: "JWT " + testUser.accessToken }
     ).send({
         postData: "Test Post",
-        senderId: testUser._id,
+        senderId: "123",
     });
-    expect(response2.statusCode).toBe(201);
+    expect(response2.statusCode).toBe(200);
   });
 
   test("Test refresh token", async () => {
@@ -168,9 +170,9 @@ describe("Auth Tests", () => {
       { authorization: "JWT " + testUser.accessToken }
     ).send({
         postData: "Test Post",
-        senderId: testUser._id,
+        senderId: "123",
     });
-    expect(response2.statusCode).not.toBe(201);
+    expect(response2.statusCode).not.toBe(200);
 
     const response3 = await request(app).post(baseUrl + "/refresh").send({
       refreshToken: testUser.refreshToken,
@@ -182,8 +184,8 @@ describe("Auth Tests", () => {
       { authorization: "JWT " + testUser.accessToken }
     ).send({
         postData: "Test Post",
-        senderId: testUser._id,
+        senderId: "123",
     });
-    expect(response4.statusCode).toBe(201);
+    expect(response4.statusCode).toBe(200);
   });
 });

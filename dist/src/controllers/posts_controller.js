@@ -13,19 +13,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const post_modules_1 = __importDefault(require("../modules/post_modules"));
+// const addPost = async (req:Request, res:Response) => {
+//   console.log("add post");
+//   try {
+//     const post= new postModel(req.body);
+//     console.log("post" + post);
+//     await post.save();
+//     res.send(post);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// };
 const addPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("add post");
     try {
         const post = new post_modules_1.default(req.body);
         yield post.save();
         res.send(post);
     }
     catch (error) {
-        res.status(400).send(error);
+        res.status(400).send;
     }
 });
+//   try {
+//     const post= new postModel(req.body);
+//     console.log("post" + post);
+//     await post.save();
+//     res.send(post);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// };
+// async create(req: Request, res: Response) {
+//   const userId = req.params.userId;
+//   const post = {
+//       ...req.body,
+//       owner: userId
+//   }
+//   req.body = post;
+//   super.create(req, res);
+// };
 const getAllPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log("get all posts");
         const posts = yield post_modules_1.default.find();
+        console.log("posts " + posts);
         res.send(posts);
     }
     catch (error) {

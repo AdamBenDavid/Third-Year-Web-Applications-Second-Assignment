@@ -15,5 +15,9 @@ router.get("/:id", comments_controller_1.default.getCommentById);
 router.delete("/:id", (req, res) => {
     comments_controller_1.default.deleteCommentById(req, res);
 });
+// router.get("/", commentsController.getAllComments.bind(commentsController));
+// router.get("/:id", commentsController.getCommentById.bind(commentsController));
+// router.post("/", authMiddleware, commentsController.addComment.bind(commentsController));
+//router.delete("/:id", authMiddleware, commentsController.deleteCommentById.bind(commentsController));
 exports.default = router;
 //# sourceMappingURL=comments_routes.js.map

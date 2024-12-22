@@ -9,13 +9,13 @@ router.get("/filter", (req,res)=>{
     postsController.getPostBySenderId(req,res);
 });
 
-router.post("/",postsController.addPost);
+router.post("/",authMiddleware, postsController.addPost);
 
 router.get("/:id", postsController.getPostById);
 
-router.delete("/", postsController.deletePosts);
+router.delete("/",authMiddleware, postsController.deletePosts);
 
-router.put("/:id", (req,res)=>{
+router.put("/:id", authMiddleware, (req,res)=>{
     postsController.updatePostById(req,res);
 });
 

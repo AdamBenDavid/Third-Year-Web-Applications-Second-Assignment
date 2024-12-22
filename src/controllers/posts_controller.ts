@@ -1,19 +1,55 @@
 import postModel,{ Post }  from "../modules/post_modules";
 import { Request, Response } from "express";
 
+// const addPost = async (req:Request, res:Response) => {
+//   console.log("add post");
+
+//   try {
+//     const post= new postModel(req.body);
+//     console.log("post" + post);
+//     await post.save();
+//     res.send(post);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// };
+
 const addPost = async (req:Request, res:Response) => {
+  console.log("add post");
   try {
-    const post= new postModel(req.body);
+    const post = new postModel(req.body);
     await post.save();
     res.send(post);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send
   }
-};
+}
+
+//   try {
+//     const post= new postModel(req.body);
+//     console.log("post" + post);
+//     await post.save();
+//     res.send(post);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// };
+
+// async create(req: Request, res: Response) {
+//   const userId = req.params.userId;
+//   const post = {
+//       ...req.body,
+//       owner: userId
+//   }
+//   req.body = post;
+//   super.create(req, res);
+// };
 
 const getAllPosts = async (req:Request, res:Response) => {
   try {
+    console.log("get all posts");
     const posts = await postModel.find();
+    console.log("posts " + posts);
     res.send(posts);
   } catch (error) {
     res.status(400).send(error);
