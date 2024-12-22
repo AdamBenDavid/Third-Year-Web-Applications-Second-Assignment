@@ -5,6 +5,7 @@ export interface User {
   favPat: string;
   password: string;
   _id?: string;
+  refreshToken?: string[];
 }
 
 const userSchema = new mongoose.Schema<User>({
@@ -21,6 +22,10 @@ const userSchema = new mongoose.Schema<User>({
       type: String,
       required: true,
     },
+  refreshToken: {
+    type: [String],
+    default: [],
+  },
 });
 
 const userModel = mongoose.model<User>("Users", userSchema);

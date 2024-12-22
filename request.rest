@@ -88,3 +88,32 @@ Content-Type: application/json
 
 ### delete a user by id
 DELETE http://localhost:3000/users/6762f61f8455f1f5ed4c7cc7
+
+###########auth############
+
+### Register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "adam@gmail",
+  "password": "1234",
+  "favPat": "Crocodile"
+}
+
+### Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "adam@gmail",
+  "password": "1234"
+}
+
+### Logout
+POST http://localhost:3000/auth/logout
+Content-Type: application/json
+//Send user 
+{
+  "email": "adam@gmail"
+}

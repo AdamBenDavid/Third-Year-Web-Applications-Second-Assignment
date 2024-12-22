@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import commentsController from "../controllers/comments_controller";
+import { authMiddleware } from "../controllers/auth_controller";
 
 router.get("/", commentsController.getAllComments);
 
@@ -12,7 +13,7 @@ router.put("/:id", (req,res)=>{
 
 router.get("/:id", commentsController.getCommentById);
 
-router.delete("/:id", (req,res)=>{
+router.delete("/:id",(req,res)=>{
     commentsController.deleteCommentById(req,res);
 });
 
