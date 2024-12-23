@@ -84,15 +84,25 @@ describe("Posts Tests", () => {
 
     //update post by id
     test("Test Update Post", async () => {
-        const response = await request(app).put(`/posts/${postId}`).send({postData: "Updated Post"});
-        console.log("response.body.postData: " + response.body.postData);
-        expect(response.statusCode).toBe(200);
-        expect(response.body.postData).toBe("Updated Post");
+        //if we didnt have the token we would get 401
+        const response1 = await request(app).put(`/posts/${postId}`).set({}).send({postData: "Updated Post"});
+        expect(response1.statusCode).not.toBe(200);
+
+        //if we had the token we would get 200
+        const response2 = await request(app).put(`/posts/${postId}`).set({ authorization: "JWT " + testUser.token }).send({postData: "Updated Post"});
+        console.log("response.body.postData: " + response2.body.postData);
+        expect(response2.statusCode).toBe(200);
+        expect(response2.body.postData).toBe("Updated Post");
     });
 
     // delete posts
     test("Test Delete Posts", async () => {
-        const response = await request(app).delete("/posts");
-        expect(response.statusCode).toBe(200);
+        //if we didnt have the token we would get 401
+        const response = await request(app).delete("/posts").set({ });
+        expect(response.statusCode).not.toBe(200);
+
+        //if we had the token we would get 200
+        const response2 = await request(app).delete("/posts").set({ authorization: "JWT " + testUser.token });
+        expect(response2.statusCode).toBe(200);
     });
 });
