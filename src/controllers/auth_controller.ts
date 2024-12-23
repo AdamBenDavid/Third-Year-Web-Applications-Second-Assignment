@@ -189,14 +189,10 @@ type Payload = {
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     console.log("authMiddleware");
-    console.log(req.header);
 
     const authorization = req.header('authorization');
     const token = authorization && authorization.split(' ')[1];
     
-    console.log("authorization: " + authorization);
-    console.log("authMiddleware token: " + token);
-
     if (!token) {
         res.status(401).send('Access Denied');
         return;
@@ -206,15 +202,12 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
         return;
     }
 
-    console.log("before verify");
-
     jwt.verify(token, process.env.TOKEN_SECRET, (err, payload) => {
         if (err) {
             res.status(401).send('Access Denied');
             return;
         }
 
-        console.log("before next")
         req.params.userId = (payload as Payload)._id;
         next();
     });
