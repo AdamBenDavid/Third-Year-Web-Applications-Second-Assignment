@@ -37,7 +37,6 @@ const testUser: newUser = {
 describe("Auth Tests", () => {
   test("Auth test register", async () => {
     const response = await request(app).post(baseUrl + "/register").send(testUser);
-    console.log("response register: " + response.body.email);
     expect(response.statusCode).toBe(200);
   });
 

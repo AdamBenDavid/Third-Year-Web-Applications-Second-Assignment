@@ -23,10 +23,8 @@ beforeAll(async () => {
     
     await userModel.deleteMany();
     const response = await request(app).post("/auth/register").send(testUser);
-    console.log("response.body.email: " + response.body.email);
     const res = await request(app).post("/auth/login").send(testUser);
 
-    console.log("res.body.id: " + res.body._id);
     testUser.token = res.body.accessToken; //not as eliav did
     testUser._id = res.body._id;
     expect(testUser.token).toBeDefined();
@@ -43,7 +41,6 @@ let postId = "";
 describe("Posts Tests", () => {
     test("Posts test get all", async () => {
       const response = await request(app).get("/posts");
-      console.log("getallposts response.body: " + response.body.length);
       expect(response.statusCode).toBe(200);
       expect(response.body.length).toBe(0);
     });
@@ -90,7 +87,6 @@ describe("Posts Tests", () => {
 
         //if we had the token we would get 200
         const response2 = await request(app).put(`/posts/${postId}`).set({ authorization: "JWT " + testUser.token }).send({postData: "Updated Post"});
-        console.log("response.body.postData: " + response2.body.postData);
         expect(response2.statusCode).toBe(200);
         expect(response2.body.postData).toBe("Updated Post");
     });
