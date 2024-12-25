@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema<User>({
   },
   favPat:{
       type: String,
-      required: true,
+      required: false,
     },
   refreshToken: {
     type: [String],
