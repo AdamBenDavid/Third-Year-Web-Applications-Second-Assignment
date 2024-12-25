@@ -16,7 +16,7 @@ const userSchema = new mongoose_1.default.Schema({
     },
     favPat: {
         type: String,
-        required: true,
+        required: false,
     },
     refreshToken: {
         type: [String],
