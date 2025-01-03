@@ -68,10 +68,10 @@ Content-Type: application/json
 }
 
 ### get user by id
-GET http://localhost:3000/users/6762f899310341a1feaade9e
+GET http://localhost:3000/users/6777e5ad882ac9320dc35198
 
 ### update a password by id
-PUT http://localhost:3000/users/6762f899310341a1feaade9e
+PUT http://localhost:3000/users/6777e5ad882ac9320dc35198
 Content-Type: application/json
 
 {
