@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import usersController from "../controllers/users_controller";
+import { authMiddleware } from "../controllers/auth_controller";
 
 /**
  * @swagger
@@ -8,7 +9,7 @@ import usersController from "../controllers/users_controller";
  *   name: Users
  *   description: User management API
  */
- 
+
 /**
  * @swagger
  * /users:
@@ -83,6 +84,8 @@ router.get("/:id", usersController.getUserById);
  *   put:
  *     summary: Update user password by ID
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,18 +106,23 @@ router.get("/:id", usersController.getUserById);
  *     responses:
  *       200:
  *         description: Password updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: User not found
  */
-router.put("/:id", (req, res) => {
+router.put("/:id", authMiddleware, (req, res) => {
   usersController.updatePasswordById(req, res);
 });
+
 /**
  * @swagger
  * /users/{id}:
  *   put:
- *     summary: Update user's favorite pat by ID
+ *     summary: Update user's favorite pattern by ID
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -135,18 +143,23 @@ router.put("/:id", (req, res) => {
  *     responses:
  *       200:
  *         description: Favorite pattern updated successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: User not found
  */
-router.put("/:id", (req, res) => {
+router.put("/:id", authMiddleware, (req, res) => {
   usersController.updateFavPatById(req, res);
 });
+
 /**
  * @swagger
  * /users/{id}:
  *   delete:
  *     summary: Delete a user by ID
  *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -157,12 +170,13 @@ router.put("/:id", (req, res) => {
  *     responses:
  *       200:
  *         description: User deleted successfully
+ *       401:
+ *         description: Unauthorized
  *       404:
  *         description: User not found
  */
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authMiddleware, (req, res) => {
   usersController.deleteUserById(req, res);
 });
 
 export default router;
-//test 1
