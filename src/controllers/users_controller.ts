@@ -24,19 +24,6 @@ const getUserById = async (req:Request, res:Response) => {
     }
 }
 
-// // Read user by email
-// const getUserByEmail = async (req:Request, res:Response) => {
-//     const email = req.params.email;
-//     try {
-//         const user = await userModel
-//             .findOne({ email: email });
-//         if (user != null) res.send(user);
-//         else res.status(400).send("user not found");
-//     } catch (error) {
-//         res.status(400).send(error);
-//     }
-// }
-
 // Update Password by id
 const updatePasswordById = async (req:Request, res:Response) => {
     const id = req.params.id;

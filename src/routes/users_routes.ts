@@ -79,7 +79,7 @@ router.get("/:id", usersController.getUserById);
 
 /**
  * @swagger
- * /users/{id}/password:
+ * /users/{id}/:
  *   put:
  *     summary: Update user password by ID
  *     tags: [Users]
@@ -111,9 +111,9 @@ router.put("/:id", (req, res) => {
 });
 /**
  * @swagger
- * /users/{id}/favPat:
+ * /users/{id}:
  *   put:
- *     summary: Update user's favorite pattern by ID
+ *     summary: Update user's favorite pat by ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
