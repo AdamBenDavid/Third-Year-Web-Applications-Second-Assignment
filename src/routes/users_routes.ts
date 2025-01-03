@@ -8,7 +8,7 @@ import usersController from "../controllers/users_controller";
  *   name: Users
  *   description: User management API
  */
-
+ 
 /**
  * @swagger
  * /users:
