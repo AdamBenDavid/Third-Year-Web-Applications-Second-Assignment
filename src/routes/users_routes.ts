@@ -77,7 +77,6 @@ router.post("/", usersController.createUser);
 
 router.get("/:id", usersController.getUserById);
 
-
 /**
  * @swagger
  * /users/{id}/password:
