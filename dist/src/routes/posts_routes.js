@@ -7,6 +7,41 @@ const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const posts_controller_1 = __importDefault(require("../controllers/posts_controller"));
 const auth_controller_1 = require("../controllers/auth_controller");
+/**
+ * @swagger
+ * tags:
+ *   name: Comments
+ *   description: The Comments API
+ */
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Post:
+ *       type: object
+ *       required:
+ *         - postData
+ *         - senderId
+ *       properties:
+ *         postData:
+ *           type: string
+ *           description: The content of the post
+ *         senderId:
+ *           type: string
+ *           description: The ID of the user who created the post
+ *       example:
+ *         postData: 'This is a post content'
+ *         senderId: '12345'
+ */
 router.get("/", posts_controller_1.default.getAllPosts);
 router.get("/filter", (req, res) => {
     posts_controller_1.default.getPostBySenderId(req, res);

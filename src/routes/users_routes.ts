@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import usersController from "../controllers/users_controller";
+import { authMiddleware } from "../controllers/auth_controller";
 
 /**
  * @swagger
@@ -106,9 +107,10 @@ router.get("/:id", usersController.getUserById);
  *       404:
  *         description: User not found
  */
-router.put("/:id", (req, res) => {
+router.put("/:id", authMiddleware, (req, res) => {
   usersController.updatePasswordById(req, res);
 });
+
 /**
  * @swagger
  * /users/{id}:
@@ -138,9 +140,10 @@ router.put("/:id", (req, res) => {
  *       404:
  *         description: User not found
  */
-router.put("/:id", (req, res) => {
+router.put("/:id", authMiddleware, (req, res) => {
   usersController.updateFavPatById(req, res);
 });
+
 /**
  * @swagger
  * /users/{id}:
@@ -160,7 +163,7 @@ router.put("/:id", (req, res) => {
  *       404:
  *         description: User not found
  */
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authMiddleware, (req, res) => {
   usersController.deleteUserById(req, res);
 });
 
