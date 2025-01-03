@@ -77,7 +77,6 @@ router.post("/", usersController.createUser);
 
 router.get("/:id", usersController.getUserById);
 
-
 /**
  * @swagger
  * /users/{id}/password:
@@ -107,8 +106,8 @@ router.get("/:id", usersController.getUserById);
  *       404:
  *         description: User not found
  */
-router.put("/:id", (req,res) => {
-    usersController.updatePasswordById(req,res); 
+router.put("/:id", (req, res) => {
+  usersController.updatePasswordById(req, res);
 });
 /**
  * @swagger
@@ -139,8 +138,8 @@ router.put("/:id", (req,res) => {
  *       404:
  *         description: User not found
  */
-router.put("/:id", (req,res) => {
-    usersController.updateFavPatById(req,res);
+router.put("/:id", (req, res) => {
+  usersController.updateFavPatById(req, res);
 });
 /**
  * @swagger
@@ -161,8 +160,8 @@ router.put("/:id", (req,res) => {
  *       404:
  *         description: User not found
  */
-router.delete("/:id", (req,res) => {
-    usersController.deleteUserById(req,res);
+router.delete("/:id", (req, res) => {
+  usersController.deleteUserById(req, res);
 });
 
 export default router;
